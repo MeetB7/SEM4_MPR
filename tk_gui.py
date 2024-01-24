@@ -1,10 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
 
-# Options for the dropdowns
-var_options = [2, 3, 4, 5, 6, 7, 8, 9]
-eq_options = [ '<=' , '>=']
-
 def generate():
     num_variables = int(variables_var.get())
     num_constraints = int(constraints_var.get())
@@ -30,6 +26,10 @@ def generate():
 
         ttk.Combobox(input_frame, values=eq_options).grid(row=i + 2, column=num_variables * 2 + 1, padx=5, pady=5)
         ttk.Entry(input_frame, width=5).grid(row=i + 2, column=num_variables * 2 + 2, padx=5, pady=5)
+
+# Options for the dropdowns
+var_options = [2, 3, 4, 5, 6, 7, 8, 9]
+eq_options = [ '<=' , '>=']
 
 # Create the main window
 root = tk.Tk()
