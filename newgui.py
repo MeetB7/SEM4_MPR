@@ -5,20 +5,27 @@ import numpy as np
 def calculate():
     num_variables = int(variables_var.get())
     num_constraints = int(constraints_var.get())
-    
-    constraints_matrix = np.zeros((num_constraints+1, num_variables))
+
+    # Initialize NumPy arrays to store the constraint coefficients and RHS values
+    constraints_matrix = np.zeros((num_constraints, num_variables))
     rhs_values = np.zeros(num_constraints)
 
+    # Retrieve values from entry widgets and populate the NumPy arrays
     for i in range(num_constraints):
-        for j in range(num_variables+1):
+        for j in range(num_variables):
             # Remove any trailing full stops and convert to float
             entry_value = float(constraints_entries[i][j].get())
             constraints_matrix[i][j] = entry_value
-    
-    print(constraints_entries)
-    print(constraints_matrix)
         
-
+        # Retrieve RHS value and remove any trailing full stops
+        rhs_value = float(constraints_rhs_entries[i].get())
+        rhs_values[i] = rhs_value
+    
+    # Now you have your constraints matrix and RHS values ready for further calculations
+    print("Constraints Matrix:")
+    print(constraints_matrix)
+    print("RHS Values:")
+    print(rhs_values)
 
 def generate():
     num_variables = int(variables_var.get())
@@ -56,7 +63,7 @@ def generate():
         constraints_entries.append(entries_row)
     
     calculate_button = ttk.Button(root, text="Calculate", command=calculate, width=15)
-    calculate_button.grid(row=6, column=1, pady=10)
+    calculate_button.grid(row=3, column=10, pady=10)
 
 
 # Options for the dropdowns

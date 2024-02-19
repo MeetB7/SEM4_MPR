@@ -41,11 +41,26 @@ def save_tableaux_to_pdf(tableau_list, filename):
 tableau_list = []
 res_file = "lpp.pdf"
 
-tableau = np.array([
-    [1, 1, 1, 0, 0, 12],
-    [2, 1, 0, 1, 0, 16],
-    [-40, -30, 0, 0, 1, 0]
+import numpy as np
+
+table = np.array([
+    [1, 1, 12],
+    [2, 1, 16],   
+    [40, 30, 0]
 ], dtype=float)
+
+tableau = np.zeros(())
+# tableau = np.array([
+#     [1, 1, 1, 0, 0, 12],
+#     [2, 1, 0, 1, 0, 16],
+#     [-40, -30, 0, 0, 1, 0]
+# ], dtype=float)
+
+# tableau = np.array([
+#     [1, 2, 1, 0, 0, 40],
+#     [1, 1, 0, 1, 0, 30],
+#     [-40, -30, 0, 0, 1, 0]
+# ], dtype=float)
 
 tableau_list.append(tableau.copy())  # Save a copy of the initial tableau
 
