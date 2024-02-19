@@ -27,7 +27,10 @@ def save_tableaux_to_pdf(tableau_list, filename):
     
     c.setFont('Helvetica', 14) 
     for iteration, tableau in enumerate(tableau_list):
-        c.drawString(85, yaxis+20, f"Tableau after iteration {iteration + 1}:")
+        if iteration == 0:
+            c.drawString(85, yaxis+20, f"Initial Tableau:")
+        else: 
+            c.drawString(85, yaxis+20, f"Tableau after iteration {iteration}:")
         row_height = 20
         for i, row in enumerate(tableau):
             for j, val in enumerate(row):
@@ -37,28 +40,36 @@ def save_tableaux_to_pdf(tableau_list, filename):
     c.save()
     print(f"Tableaux saved to {filename}")
 
+def make_tableau(table):
+    tableau = np.zeros((num_constraints+1,num_variables+num_constraints+2))
+    b = 0
+    for row in table:
+        for index ,element in  enumerate(row):         
+            if(index == num_variables):
+                tableau[b][-1] = element
+                b = b+1
+                continue
+            if(b==num_constraints):
+                tableau[b][index] = -1 * element
+                continue
+            tableau[b][index] = element
+    return tableau
 
 tableau_list = []
 res_file = "lpp.pdf"
 
-import numpy as np
-
+num_variables = 2
+num_constraints = 2
 table = np.array([
     [1, 1, 12],
     [2, 1, 16],   
     [40, 30, 0]
 ], dtype=float)
 
-tableau = np.zeros(())
+tableau = make_tableau(table)
 # tableau = np.array([
 #     [1, 1, 1, 0, 0, 12],
 #     [2, 1, 0, 1, 0, 16],
-#     [-40, -30, 0, 0, 1, 0]
-# ], dtype=float)
-
-# tableau = np.array([
-#     [1, 2, 1, 0, 0, 40],
-#     [1, 1, 0, 1, 0, 30],
 #     [-40, -30, 0, 0, 1, 0]
 # ], dtype=float)
 
