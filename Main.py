@@ -58,6 +58,10 @@ def make_tableau(table):
                 tableau[b][index] = -1 * element
                 continue
             tableau[b][index] = element
+    
+    for i in range(0, num_constraints+1):
+        tableau[i][num_variables + i] = 1
+    
     return tableau
 
 def calculate():  
@@ -78,12 +82,20 @@ def calculate():
     
     global tableau_list 
     tableau_list = []
-    
+    tableau_list.append(tableau.copy()) #initial 
+    iteration = 0
+    while(hasNegativeEntry(tableau) and iteration < 7):
+        iteration = iteration + 1
+        simplex_iteration(tableau)
+        tableau_list.append(tableau)
+
+    # for tableau in tableau_list:
+    #     print(tableau,end="\n")
     # Save all tableaux to PDF
     save_tableaux_to_pdf(tableau_list, res_file)
     
-    pdf_button = ttk.Button(root, text="PDF", command= webbrowser.open_new(res_file) , width=15)
-    pdf_button.grid(row=6, column=1, pady=10) # pos to be changed 
+    pdf_button = ttk.Button(root, text="PDF", command=lambda: webbrowser.open_new(res_file) , width=15)
+    pdf_button.grid(row=10, column=1, pady=10) # pos to be changed 
     
 def generate():
     global num_variables,num_constraints
@@ -130,7 +142,12 @@ def generate():
     calculate_button = ttk.Button(root, text="Calculate", command=calculate, width=15)
     calculate_button.grid(row=6, column=1, pady=10)
 
-
+def hasNegativeEntry(tableau):
+    for entry in tableau[-1]:
+        if(entry < 0):
+            return True
+    return False
+    
 # Options for the dropdowns
 var_options = [2, 3, 4, 5, 6, 7, 8, 9]
 eq_options = ['<=', '>=']
