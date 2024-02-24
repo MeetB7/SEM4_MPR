@@ -42,7 +42,13 @@ def save_tableaux_to_pdf(tableau_list, filename):
                 formatted_val = "{:.3f}".format(val)
                 c.drawString(85 + j * 50, yaxis - i * row_height, formatted_val)
         yaxis  -= 1.5 * inch
-        
+    
+    # c.drawString(85, yaxis - 20, "Final Result:")
+
+    # c.drawString(85, yaxis - 40, "Z = {:.3f}".format(tableau[-1][-1]))
+    # for i, val in enumerate(result):
+    #     c.drawString(85 + i * 50, yaxis - 2 * row_height, f"x{i+1}: ")
+
     c.save()
     print(f"Tableaux saved to {filename}")
 
@@ -113,7 +119,11 @@ def calculate():
     z_value = "{:0.3f}".format(tableau[-1][-1])
     if(objtype == 0):
         for i in range(0,num_variables):
-            result.append("{:0.3f}".format(tableau[i][-1]))
+            for j in range(0,num_constraints):
+                if tableau[j][i] == 1:
+                    row = j
+            result.append("{:0.3f}".format(tableau[row][-1]))
+        
     else: 
         for i in range(num_variables,num_variables+num_variables):
             result.append("{:0.3f}".format(tableau[-1][i]))
@@ -132,7 +142,6 @@ def calculate():
     ttk.Label(output_frame,text="For detailed solution with each iteration of tableau => ",font=custom_font).grid(row=10,column=0,padx=3,pady=5)
     pdf_button = ttk.Button(output_frame, text="PDF", command=lambda: webbrowser.open_new(res_file) , width=15)
     pdf_button.grid(row=10, column=1, pady=10)
-    
     
 def generate():
     global num_variables,num_constraints
