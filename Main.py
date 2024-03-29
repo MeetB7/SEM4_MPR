@@ -33,15 +33,33 @@ def save_tableaux_to_pdf(tableau_list, filename):
     c.setFont('Helvetica', 14) 
     for iteration, tableau in enumerate(tableau_list):
         if iteration == 0:
-            c.drawString(85, yaxis+20, f"Initial Tableau:")
-        else: 
-            c.drawString(85, yaxis+20, f"Tableau after iteration {iteration}:")
+            j =0
+            for i in range(0,num_variables):
+                c.drawString(85 + i * 50, yaxis+17, f"x{i+1}")
+                j +=1
+            for i in range(0,num_variables+1):
+                c.drawString(85 + j * 50, yaxis+17, f"s{i+1}")
+                j += 1
+            j += 1
+            c.drawString(85 + j * 50, yaxis+17, f"Z")   
+            c.drawString(85, yaxis+30, f"Initial Tableau:")
+        else:
+            j =0
+            for i in range(0,num_variables):
+                c.drawString(85 + i * 50, yaxis+17, f"x{i+1}")
+                j +=1
+            for i in range(0,num_variables+1):
+                c.drawString(85 + j * 50, yaxis+17, f"s{i+1}")
+                j += 1
+            j += 1
+            c.drawString(85 + j * 50, yaxis+17, f"RHS")
+            c.drawString(85, yaxis+30, f"Tableau after iteration {iteration}:")
         row_height = 20
         for i, row in enumerate(tableau):
             for j, val in enumerate(row):
                 formatted_val = "{:.3f}".format(val)
                 c.drawString(85 + j * 50, yaxis - i * row_height, formatted_val)
-        yaxis  -= 1.5 * inch
+        yaxis  -= 2 * inch
     
     # c.drawString(85, yaxis - 20, "Final Result:")
 
