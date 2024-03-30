@@ -5,7 +5,7 @@ import webbrowser
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import inch
 
-global z_value, result, num_variables, num_constraints, constraints_entries, objective_entries, tableau, tableau_list,objtype,  res_file
+global z_value, result, num_variables, num_constraints, constraints_entries, objective_entries, tableau, tableau_list,objtype, res_file
 res_file = "lpp.pdf"
 
 def simplex_iteration(tableau):
@@ -40,8 +40,9 @@ def save_tableaux_to_pdf(tableau_list, filename):
             for i in range(0,num_variables+1):
                 c.drawString(85 + j * 50, yaxis+17, f"s{i+1}")
                 j += 1
-            j += 1
             c.drawString(85 + j * 50, yaxis+17, f"Z")   
+            j += 1
+            c.drawString(85 + j * 50, yaxis+17, f"RHS")   
             c.drawString(85, yaxis+30, f"Initial Tableau:")
         else:
             j =0
@@ -51,6 +52,7 @@ def save_tableaux_to_pdf(tableau_list, filename):
             for i in range(0,num_variables+1):
                 c.drawString(85 + j * 50, yaxis+17, f"s{i+1}")
                 j += 1
+            c.drawString(85 + j * 50, yaxis+17, f"Z")   
             j += 1
             c.drawString(85 + j * 50, yaxis+17, f"RHS")
             c.drawString(85, yaxis+30, f"Tableau after iteration {iteration}:")
@@ -113,8 +115,8 @@ def calculate():
     global tableau
     if (objtype == 1):
         table = table.transpose()
-    tableau = make_tableau(table) # implementing slack variables is remaining
-    print(tableau)
+    tableau = make_tableau(table) 
+    # print(tableau)
     
     global tableau_list 
     tableau_list = []
